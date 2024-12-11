@@ -11,6 +11,8 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 
 
 const App = () => {
+
+  //Add New Job
   const addJob = async (newJob) => {
     const res = await fetch('/api/jobs', {
       method: 'POST',
@@ -22,13 +24,21 @@ const App = () => {
     return;
   }
 
+  //delete Job
+  const deleteJob = async (id) => {
+    const res = await fetch(`/api/jobs/${id}`, {
+      method: 'DELETE',
+    });
+    return;
+  }
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       < Route path='/' element={ < MainLayout /> }>
         < Route index element={< HomePage />} />
         < Route path='/jobs' element={< JobsPage />} />
         < Route path='/add-job' element={< AddJob addJobSubmit={addJob} />} />
-        < Route path='jobs/:id' element={< JobPage />} loader={jobLoader} />
+        < Route path='jobs/:id' element={< JobPage deleteJob = { deleteJob } />} loader={jobLoader} />
       </Route>
     )
     
